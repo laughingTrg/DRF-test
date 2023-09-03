@@ -19,10 +19,12 @@ from rest_framework import routers
 from django.urls import path, include
 from tonus.views import ExerciseViewSet, ClientViewSet, TrainerViewSet
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 router.register(r'clients', ClientViewSet)
 router.register(r'exercises', ExerciseViewSet)
 router.register(r'trainers', TrainerViewSet)
+print(router.urls)
+
 
 
 urlpatterns = [
