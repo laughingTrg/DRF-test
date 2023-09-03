@@ -15,17 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from rest_framework import routers
 from django.urls import path, include
-from tonus.views import ClientListCreateAPIView, ExerciseAPIView, TrainerAPIView, \
-ClientUpdateAPIView, ClientDetailAPIView, ExerciseDetailAPIView
+from tonus.views import ExerciseViewSet, ClientViewSet, TrainerViewSet
+
+router = routers.SimpleRouter()
+router.register(r'clients', ClientViewSet)
+router.register(r'exercises', ExerciseViewSet)
+router.register(r'trainers', TrainerViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/v1/clientlist/', ClientListCreateAPIView.as_view()),
-    path('api/v1/clientlist/<int:pk>/', ClientUpdateAPIView.as_view()),
-    path('api/v1/clientdetail/<int:pk>/', ClientDetailAPIView.as_view()),
-    path('api/v1/exercises/', ExerciseAPIView.as_view()),
-    path('api/v1/exercises/<int:pk>/', ExerciseDetailAPIView.as_view()),
-    path('api/v1/trainers/', TrainerAPIView.as_view()),
+    path('api/v1/', include(router.urls)),
 ]

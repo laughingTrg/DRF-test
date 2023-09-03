@@ -22,4 +22,4 @@ class TrainerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trainer
-        fields = ('first_name', 'last_name', 'email', 'exercises')
+        fields = ('id', 'first_name', 'last_name', 'email', 'exercises')
