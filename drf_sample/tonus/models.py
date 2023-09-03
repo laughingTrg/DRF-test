@@ -55,7 +55,7 @@ class Trainer(AdvUser):
         verbose_name_plural = "Тренеры"
         
     def __str__(self):
-        return f" {self.first_name} {self.last_name} ({self.email})"
+        return f"{self.pk} {self.first_name} {self.last_name} ({self.email})"
 
 class Client(AdvUser):
    
@@ -66,5 +66,5 @@ class Client(AdvUser):
         verbose_name_plural = "Клиенты"
 
     def __str__(self):
-        return f" {self.first_name} {self.last_name} ({self.email})"
+        return f"{self.pk} {self.first_name} {self.last_name} ({self.email})"
 
