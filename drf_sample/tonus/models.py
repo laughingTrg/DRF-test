@@ -17,18 +17,19 @@ class ExerciseType(models.Model):
 
 class Exercise(models.Model):
     title = models.CharField(max_length=255)
-    date = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     ex_type = models.ForeignKey("ExerciseType", related_name='exercises', on_delete=models.CASCADE, null=False, verbose_name="Вид тренировки")
-    trainer = models.ForeignKey("Trainer", related_name='exercises', on_delete=models.PROTECT, null=False, verbose_name="Тренер")
-    clients = models.ManyToManyField("Client", related_name='exercises', verbose_name="Клиенты")
+    trainer = models.ForeignKey("Trainer", related_name='exercises', on_delete=models.PROTECT, null=True, verbose_name="Тренер")
+    clients = models.ManyToManyField("Client", related_name='exercises', verbose_name="Клиенты", null=True)
     cli_num = models.IntegerField(default=10, blank=False, verbose_name="Количество человек")
     place = models.CharField(max_length=100, verbose_name="Зал")
     deleted = models.BooleanField(default=False)
 
     def __str__(self):
-        return f" {self.title} ({self.date}) {self.trainer.last_name}"
+        return f"{self.pk} {self.title} ({self.date} {self.time}) {self.trainer.last_name}"
 
     def delete(self):
         self.deleted = True
@@ -55,16 +56,16 @@ class Trainer(AdvUser):
         verbose_name_plural = "Тренеры"
         
     def __str__(self):
-        return f" {self.first_name} {self.last_name} ({self.email})"
+        return f"{self.pk} {self.first_name} {self.last_name} ({self.email})"
 
 class Client(AdvUser):
    
-    pass
+    #exercises = models.ManyToManyField("Exercise", related_name='clients', verbose_name="Тренировки")
 
     class Meta():
         verbose_name = "Клиент"
         verbose_name_plural = "Клиенты"
 
     def __str__(self):
-        return f" {self.first_name} {self.last_name} ({self.email})"
+        return f"{self.pk} {self.first_name} {self.last_name} ({self.email})"
 
