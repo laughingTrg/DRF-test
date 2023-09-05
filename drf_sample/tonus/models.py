@@ -38,6 +38,7 @@ class Exercise(models.Model):
     class Meta():
         verbose_name = "Тренировка"
         verbose_name_plural = "Тренировки"
+        ordering = ('date', 'time',)
 
 class AdvUser(AbstractUser):
 
