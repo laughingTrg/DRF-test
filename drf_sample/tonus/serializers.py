@@ -25,11 +25,15 @@ class ExerciseSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'date', 'ex_type', 'trainer', 'clients', 'cli_num', 'place', )
 
 class ClientSerializer(serializers.ModelSerializer):
-    exercises = ExerciseSerializer(many=True)
+    exercises = serializers.StringRelatedField(many=True)
+
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return super(ClientSerializer, self).create(validated_data)
 
     class Meta:
         model = Client
-        fields = ('id', 'first_name', 'last_name', 'email', 'exercises')
+        fields = ('id', 'first_name', 'last_name', 'email', 'password', 'exercises', 'birthday_at', 'username')
 
 class TrainerSerializer(serializers.ModelSerializer):
     exercises = ExerciseSerializer(many=True)
@@ -39,7 +43,7 @@ class TrainerSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'email', 'password', 'exercises', 'birthday_at', 'username')
 
 class TrainerPostSerializer(serializers.ModelSerializer):
-    exercises = serializers.HiddenField(default=None)
+    exercises = serializers.HiddenField(default=[])
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data['password'])
