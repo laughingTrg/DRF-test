@@ -17,7 +17,8 @@ class ExerciseType(models.Model):
 
 class Exercise(models.Model):
     title = models.CharField(max_length=255)
-    date = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     ex_type = models.ForeignKey("ExerciseType", related_name='exercises', on_delete=models.CASCADE, null=False, verbose_name="Вид тренировки")
@@ -28,7 +29,7 @@ class Exercise(models.Model):
     deleted = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.pk} {self.title} ({self.date}) {self.trainer.last_name}"
+        return f"{self.pk} {self.title} ({self.date} {self.time}) {self.trainer.last_name}"
 
     def delete(self):
         self.deleted = True
