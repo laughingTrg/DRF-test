@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "drf project for presentation"
+version = "0.1.0"
+description = "This project is building for my first offer."
+authors = ["laughing <laughinChrist@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.4"
+pillow = "^10.0.0"
+djangorestframework = "^3.14.0"
+drf-yasg = "^1.21.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
