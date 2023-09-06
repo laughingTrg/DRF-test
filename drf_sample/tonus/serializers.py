@@ -3,17 +3,17 @@ from rest_framework import serializers
 from .models import Client, Exercise, Trainer
 
 class ExercisePostSerializer(serializers.ModelSerializer):
-    clients = serializers.HiddenField(default=None)
+    clients = serializers.HiddenField(default=[])
 
     class Meta:
         model = Exercise
-        fields = ('id', 'title', 'date', 'ex_type', 'trainer', 'clients', 'cli_num', 'place', )
+        fields = ('id', 'title', 'date', 'time', 'ex_type', 'trainer', 'clients', 'cli_num', 'place', )
 
 class ExercisePutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Exercise
-        fields = ('id', 'title', 'date', 'ex_type', 'trainer', 'clients', 'cli_num', 'place', )
+        fields = ('id', 'title', 'date', 'time', 'ex_type', 'trainer', 'clients', 'cli_num', 'place', )
 
 class ExerciseSerializer(serializers.ModelSerializer):
     trainer = serializers.StringRelatedField()
