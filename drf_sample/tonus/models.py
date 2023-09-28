@@ -23,7 +23,7 @@ class Exercise(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     ex_type = models.ForeignKey("ExerciseType", related_name='exercises', on_delete=models.CASCADE, null=False, verbose_name="Вид тренировки")
     trainer = models.ForeignKey("Trainer", related_name='exercises', on_delete=models.PROTECT, null=True, verbose_name="Тренер")
-    clients = models.ManyToManyField("Client", related_name='exercises', verbose_name="Клиенты", null=True)
+    clients = models.ManyToManyField("Client", related_name='exercises', verbose_name="Клиенты", null=True, blank=True)
     cli_num = models.IntegerField(default=10, blank=False, verbose_name="Количество человек")
     place = models.CharField(max_length=100, verbose_name="Зал")
     deleted = models.BooleanField(default=False)

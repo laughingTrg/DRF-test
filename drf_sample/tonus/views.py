@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django_filters import rest_framework as filters
 
 from .permission import ReadOnly
 from .models import Client, Exercise, Trainer, ExerciseType
@@ -24,7 +25,9 @@ class ExerciseViewSet(viewsets.ModelViewSet):
 
     queryset = Exercise.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    filter_backends = (filters.DjangoFilterBackend, )
 
+    filterset_fields = ('title', 'date',)
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
