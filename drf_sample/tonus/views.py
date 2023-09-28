@@ -23,7 +23,6 @@ class ClientViewSet(viewsets.ModelViewSet):
 class ExerciseViewSet(viewsets.ModelViewSet):
 
     queryset = Exercise.objects.all()
-#    serializer_class = ExerciseSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
 
 
@@ -37,7 +36,8 @@ class ExerciseViewSet(viewsets.ModelViewSet):
 class TrainerViewSet(viewsets.ModelViewSet):
     queryset = Trainer.objects.all()
     serializer_class = TrainerSerializer
-    permission_classes = (permissions.IsAdminUser|ReadOnly, )
+    #permission_classes = (permissions.IsAdminUser|ReadOnly, )
+    permission_classes = (permissions.IsAdminUser, )
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
