@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Case, When, Count, Avg
 from rest_framework import generics, viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, UpdateModelMixin, RetrieveModelMixin
@@ -35,7 +36,10 @@ class ExerciseTypeViewSet(viewsets.ModelViewSet):
 class ExerciseViewSet(viewsets.ModelViewSet):
 
     queryset = Exercise.objects.all().select_related("ex_type").\
-            select_related("trainer").prefetch_related("clients")
+            select_related("trainer").prefetch_related("clients").annotate(
+            annotated_likes=Count(Case(When(clientexerciserelation__like=True,
+                                            then=1))),
+            rating=Avg("clientexerciserelation__rate"))
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
     filter_backends = (filters.DjangoFilterBackend, )
     filterset_class = ExerciseFilter

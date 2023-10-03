@@ -41,11 +41,19 @@ class ExerciseSerializer(serializers.ModelSerializer):
     ex_type = ExerciseTypeField(read_only=True)
     trainer = TrainerClientField(read_only=True)
     clients = TrainerClientField(many=True, allow_null=True, read_only=True)
+    likes = serializers.SerializerMethodField()
+    annotated_likes = serializers.IntegerField(read_only=True)
+    rating = serializers.DecimalField(decimal_places=2, max_digits=3)
 
     class Meta:
         model = Exercise
         fields = ('id', 'title', 'date', 'time', 'ex_type',
-                  'trainer', 'clients', 'cli_num', 'place', )
+                  'trainer', 'clients', 'cli_num', 'place', 'likes', 
+                  'annotated_likes', 'rating')
+
+    def get_likes(self, instance):
+        return ClientExerciseRelation.objects.filter(exercise=instance, \
+                like=True).count()
 
 
 class ExerciseField(serializers.RelatedField):
