@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Client, Exercise, ExerciseType, Trainer, \
-        ClientExerciseRelation
+    ClientExerciseRelation
 
 # Register your models here.
 admin.site.register(Trainer)

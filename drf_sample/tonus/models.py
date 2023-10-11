@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser
 class ExerciseType(models.Model):
     title = models.CharField(max_length=255, verbose_name="Название")
     style = models.TextField(blank=False, verbose_name="Вид тренировки")
-    description = models.TextField(blank=True, \
-            verbose_name="Описание тренировки")
+    description = models.TextField(blank=True,
+                                   verbose_name="Описание тренировки")
     is_published = models.BooleanField(default=True)
 
     def __str__(self):
@@ -30,18 +30,18 @@ class Exercise(models.Model):
                                 on_delete=models.PROTECT, null=True,
                                 verbose_name="Тренер")
     clients = models.ManyToManyField(
-        "Client", related_name='exercises', verbose_name="Клиенты", 
+        "Client", related_name='exercises', verbose_name="Клиенты",
         blank=True)
     cli_num = models.IntegerField(
         default=10, blank=False, verbose_name="Количество человек")
     place = models.CharField(max_length=100, verbose_name="Зал")
-    deleted = models.BooleanField(default=False, \
-            verbose_name="Тренировка закончилась")
+    deleted = models.BooleanField(default=False,
+                                  verbose_name="Тренировка закончилась")
     likers = models.ManyToManyField("Client", through="ClientExerciseRelation")
 
     def __str__(self):
         return f"{self.pk} {self.title} ({self.date} {self.time})" \
-                f" {self.trainer.last_name}"
+               f" {self.trainer.last_name}"
 
     def delete(self):
         self.deleted = True
@@ -54,7 +54,6 @@ class Exercise(models.Model):
 
 
 class AdvUser(AbstractUser):
-
     is_activated = models.BooleanField(default=True)
     birthday_at = models.DateField(blank=True, null=True)
 
@@ -63,7 +62,6 @@ class AdvUser(AbstractUser):
 
 
 class Trainer(AdvUser):
-
     pass
 
     class Meta:
@@ -75,7 +73,6 @@ class Trainer(AdvUser):
 
 
 class Client(AdvUser):
-
     class Meta:
         verbose_name = "Клиент"
         verbose_name_plural = "Клиенты"
@@ -86,17 +83,17 @@ class Client(AdvUser):
 
 class ClientExerciseRelation(models.Model):
     RATE_CHOISES = (
-            (1, 'Больше не приду'),
-            (2, 'Не очень'),
-            (3, 'Нормально'),
-            (4, 'Хорошо'),
-            (5, 'Отлично')
+        (1, 'Больше не приду'),
+        (2, 'Не очень'),
+        (3, 'Нормально'),
+        (4, 'Хорошо'),
+        (5, 'Отлично')
     )
 
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, \
-            verbose_name="Клиент")
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, \
-            verbose_name="Тренировка")
+    client = models.ForeignKey(Client, on_delete=models.CASCADE,
+                               verbose_name="Клиент")
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE,
+                                 verbose_name="Тренировка")
     like = models.BooleanField(default=False)
     rate = models.PositiveSmallIntegerField(choices=RATE_CHOISES, null=True)
 

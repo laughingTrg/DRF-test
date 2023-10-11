@@ -4,10 +4,9 @@ from .models import Client, ClientExerciseRelation, Exercise, Trainer, ExerciseT
 
 
 class ExerciseTypeSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = ExerciseType
-        exclude = ('is_published', )
+        exclude = ('is_published',)
 
 
 class ExercisePostSerializer(serializers.ModelSerializer):
@@ -16,15 +15,14 @@ class ExercisePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
         fields = ('id', 'title', 'date', 'time', 'ex_type',
-                  'trainer', 'clients', 'cli_num', 'place', )
+                  'trainer', 'clients', 'cli_num', 'place',)
 
 
 class ExercisePutSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Exercise
         fields = ('id', 'title', 'date', 'time', 'ex_type',
-                  'trainer', 'clients', 'cli_num', 'place', )
+                  'trainer', 'clients', 'cli_num', 'place',)
 
 
 class ExerciseTypeField(serializers.RelatedField):
@@ -48,12 +46,12 @@ class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
         fields = ('id', 'title', 'date', 'time', 'ex_type',
-                  'trainer', 'clients', 'cli_num', 'place', 'likes', 
+                  'trainer', 'clients', 'cli_num', 'place', 'likes',
                   'annotated_likes', 'rating')
 
     def get_likes(self, instance):
-        return ClientExerciseRelation.objects.filter(exercise=instance, \
-                like=True).count()
+        return ClientExerciseRelation.objects.filter(exercise=instance,
+                                                     like=True).count()
 
 
 class ExerciseField(serializers.RelatedField):
@@ -97,7 +95,6 @@ class TrainerPostSerializer(serializers.ModelSerializer):
 
 
 class TrainerPutSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Trainer
         fields = ('id', 'first_name', 'last_name', 'email',
@@ -105,7 +102,6 @@ class TrainerPutSerializer(serializers.ModelSerializer):
 
 
 class ClientExerciseSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ClientExerciseRelation
-        fields = ("exercise", "like", "rate", )
+        fields = ("exercise", "like", "rate",)
